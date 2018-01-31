@@ -1,44 +1,49 @@
 import React, { Component } from 'react';
 import EditableCell from './EditableCell'
+import {connect} from 'react-redux';
 
 class PersonRow extends React.Component {
-    onDelEvent() {
-        this.props.onDelEvent(this.props.person);
-    }
 
     render() {
+        const {user, users} =  this.props;
+        debugger
         return (
             <tr className="eachRow">
                 <EditableCell onPersonTableUpdate={this.props.onPersonTableUpdate} cellData={{
                     "type": "firstName",
-                    value: this.props.person.firstName,
-                    id: this.props.person.id
+                    value: user.user.firstName,
+                    id: user.user.id
                 }}
                 />
                 <EditableCell onPersonTableUpdate={this.props.onPersonTableUpdate} cellData={{
                     type: "lastName",
-                    value: this.props.person.lastName,
-                    id: this.props.person.id
+                    value: user.user.lastName,
+                    id: user.user.id
                 }}
                 />
                 <EditableCell onPersonTableUpdate={this.props.onPersonTableUpdate} cellData={{
                     type: "DOB",
-                    value: this.props.person.DOB,
-                    id: this.props.person.id
+                    value: user.user.DOB,
+                    id: user.user.id
                 }}
                 />
                 <EditableCell onPersonTableUpdate={this.props.onPersonTableUpdate} cellData={{
                     type: "PhoneNumber",
-                    value: this.props.person.PhoneNumber,
-                    id: this.props.person.id
+                    value: user.user.PhoneNumber,
+                    id: user.user.id
                 }}
                 />
-                <td className="del-cell">
-                    <input type="button" onClick={this.onDelEvent.bind(this)} value="X" className="del-btn"/>
-                </td>
+
             </tr>
         );
     }
 }
-
-export default PersonRow
+function mapStateToProps(state) {
+    const { users, authentication } = state;
+    const { user } = authentication;
+    return {
+        user,
+        users,
+    };
+}
+export default connect(mapStateToProps)(PersonRow);

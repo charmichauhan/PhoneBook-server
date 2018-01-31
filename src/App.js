@@ -3,11 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import Login from "./components/loginForm";
 import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
 import EditProfile from './components/editProfile';
 import { Route } from 'react-router-dom';
-import Persons from './component/Persons';
-// import MovieTable from './component/demo'
+import Persons from './components/Persons';
 class App extends Component {
   render() {
     return (
@@ -17,12 +15,10 @@ class App extends Component {
           {/*<h1 className="App-title">Welcome to React</h1>*/}
         {/*</header>*/}
           {/*{this.props.children}*/}
-          {/*<Route exact path="/" component={Login}/>*/}
-          <Route exact={true} path="/" component={Register}/>
-          <Route path="/dashboard" component={Dashboard}  />
+          <Route exact path="/" component={Login}/>
+          <Route exact={true} path="/register" component={Register}/>
           <Route path="/editProfile" component={EditProfile}/>
-          <Route path="/data" component={Persons}/>
-          {/*<Route path="/demo" component={MovieTable}/>*/}
+          <Route path="/dashboard" component={Persons}/>
       </div>
     );
   }

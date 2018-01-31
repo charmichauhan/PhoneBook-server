@@ -136,10 +136,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({register},dispatch);
 }
 
-// Registration = reduxForm({
-//     validate,
-//     form: 'SignupForm',
-//     destroyOnUnmount:false
-// })(Registration);
-
 export default connect(mapStateToProps,  {register})(Register);
