@@ -10,7 +10,6 @@ require('babel-core/register');
 var randtoken = require('rand-token');
 var Temps = require('./models/token');
 var _ = require('lodash');
-var bcrypt = require('bcrypt');
 // var passport = require('passport'),
 //     LocalStrategy = require('passport-local');
 // var expressSession = require('express-session');

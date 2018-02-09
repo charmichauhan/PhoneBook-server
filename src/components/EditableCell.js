@@ -8,7 +8,7 @@ class EditableCell extends React.Component {
         }
     }
     handleValidation(){
-        debugger
+        debugger;
         let formIsValid = true;
         if(this.props.cellData.value === '')
         {
@@ -23,11 +23,12 @@ class EditableCell extends React.Component {
         return formIsValid;
     }
     render() {
-        debugger
+        debugger;
         return (
             <td>
                 <form>
-                <input className={this.handleValidation()===false ? "error" : ""} type='text' name={this.props.cellData.type} id={this.props.cellData.id}
+                <input className={this.handleValidation()===false ? "error" : ""} type='text'
+                       name={this.props.cellData.type} id={this.props.cellData.id}
                        value={this.props.cellData.value} onChange={this.props.onPersonTableUpdate}/>
                 </form>
             </td>

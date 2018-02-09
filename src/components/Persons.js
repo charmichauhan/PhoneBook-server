@@ -14,10 +14,10 @@ class Persons extends React.Component {
             filterText: "",
             sortBy: null,
             sortDir: null,
+            user: [{}]
         }
         this.onPersonTableUpdate=this.handlePersonTable.bind(this);
-        this.onRowAdd=this.handleAddEvent.bind(this);
-        // this.onRowDel=this.handleRowDel.bind(this);
+        // this.onRowAdd=this.handleAddEvent.bind(this);
         this.handleUserInput=this.handleUserInput.bind(this);
         this.handleLNInput=this.handleLNInput.bind(this);
         this.handleDOBInput=this.handleDOBInput.bind(this);
@@ -26,15 +26,15 @@ class Persons extends React.Component {
         this.changeFilterlName=this.changeFilterlName.bind(this);
         this.changeFilterDOB=this.changeFilterDOB.bind(this);
         this.changeFilterPhone=this.changeFilterPhone.bind(this);
-        this._sortRowsBy=this._sortRowsBy.bind(this)
+        this._sortRowsBy=this._sortRowsBy.bind(this);
     }
 
     componentDidMount(){
-        debugger
+        debugger;
         this.props.getAll()
     }
     handleDeleteUser(_id) {
-        debugger
+        debugger;
         return (e) => this.props.Delete(_id);
     }
 
@@ -55,49 +55,30 @@ class Persons extends React.Component {
     }
     changeFilterlName = () => {
         this.handleLNInput(this.refs.filterLNInput.value);
-    }
+    };
     changeFilterDOB = () => {
         this.handleDOBInput(this.refs.filterDOBInput.value);
-    }
+    };
     changeFilterPhone = () => {
         this.handlePNInput(this.refs.filterPNInput.value);
-    }
+    };
 
-    // handleRowDel(person) {
+    // handleAddEvent() {
     //     debugger;
-    //     // this.props.deleteData();
-    //     var item = JSON.parse(localStorage.getItem('myData'))
-    //     console.log('item',item);
-    //     var index = -1;
-    //     var clength = item.persons.length;
-    //     for( var i = 0; i < clength; i++ ) {
-    //         if(  item.persons[i].id === person.id ) {
-    //             index = i;
-    //             break;
-    //         }
+    //     const {users} = this.props;
+    //     var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
+    //     console.log('id',id)
+    //     var person = {
+    //         id: id,
+    //         firstName: "",
+    //         lastName: "",
+    //         DOB: '',
+    //         PhoneNumber: "",
     //     }
-    //     item.persons.splice( index, 1 );
-    //     this.setState( item );
-    //     console.log('item-del',item)
-    //     localStorage.setItem('myData', JSON.stringify(item));
-    // };
-
-    handleAddEvent() {
-        debugger;
-        const {users} = this.props;
-        var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
-        console.log('id',id)
-        var person = {
-            id: id,
-            firstName: "",
-            lastName: "",
-            DOB: '',
-            PhoneNumber: "",
-        }
-        users.items && users.items.push(person);
-        this.setState(users);
-        // this.props.addData();
-    }
+    //     users.items && users.items.push(person);
+    //     this.setState(users);
+    //     // this.props.addData();
+    // }
     handlePersonTable(evt) {
         const {users} = this.props;
         var item = {
@@ -114,7 +95,7 @@ class Persons extends React.Component {
             }
             return person;
         });
-        this.setState({users: newPersons});
+        this.setState({user: newPersons});
     };
     _sortRowsBy=(cellDataKey)=>{
         debugger
@@ -125,7 +106,7 @@ class Persons extends React.Component {
         console.log('sortDir',sortDir)
         var sortBy = cellDataKey;
         console.log('sortBy',sortBy)
-        if (sortBy === this.state.sortBy) {
+        if (sortBy) {
             sortDir = this.state.sortDir === 'ASC' ? 'DESC' : 'ASC';
         }
         else {
@@ -147,14 +128,15 @@ class Persons extends React.Component {
             }
             return sortVal;
         });
+        console.log('rows1',rows1);
         self.setState({
-            users : rows1,
+            user : rows1,
             sortBy,
             sortDir
-        });
+        }, () => console.log('state==',this.state.user));
         let sortedDOB;
         if(sortBy === 'DOB'){
-            debugger
+            debugger;
             if (sortDir === 'ASC') {
                 sortedDOB = rows.sort((a, b) => Date.parse(new Date(a.DOB.split("/").reverse().join("-"))) - Date.parse(new Date(b.DOB.split("/").reverse().join("-"))));
                 console.log('sortedDOB', sortedDOB)
@@ -165,21 +147,21 @@ class Persons extends React.Component {
             }
         }
         self.setState({
-            users : sortedDOB,
+            user: sortedDOB,
             sortBy,
             sortDir
-        });
+        }, () => console.log('stateDOB==',this.state.user));
     };
 
     render() {
         const {users} = this.props;
-        debugger
+        debugger;
         var onPersonTableUpdate = this.onPersonTableUpdate;
         const self = this;
-        console.log('users=---=-==-=', users.items);
+
         var user = users.items &&
                         users.items.map(function(user) {
-                        if ( ( user.firstName.toLowerCase().indexOf(self.state.filterText.toLowerCase()) ||
+                            if ( ( user.firstName.toLowerCase().indexOf(self.state.filterText.toLowerCase()) ||
                                 user.lastName.toLowerCase().indexOf(self.state.filterlastName.toLowerCase()) ||
                                 user.DOB.indexOf(self.state.filterDOB)
                                 // ||  user.PhoneNumber.indexOf(self.state.filterPhoneNumber)
@@ -192,7 +174,7 @@ class Persons extends React.Component {
         });
 
         var sortDirArrow = "";
-        console.log('this.state.sortDir',this.state.sortDir)
+        console.log('this.state.sortDir',this.state.sortDir);
         if (this.state.sortDir !== null) {
             sortDirArrow = this.state.sortDir === 'DESC' ? ' ↓' : ' ↑';
             console.log('sortDirArrow', sortDirArrow)
@@ -201,8 +183,8 @@ class Persons extends React.Component {
             <div>
                 <h2>PhoneBook Application</h2>
                 <div>
-                    <button type="button" onClick={this.onRowAdd} className="btn btn-primary pull-right"
-                            style={{marginRight:'200px'}}>Add</button>
+                        {/*<button type="button" onClick={this.onRowAdd} className="btn btn-primary pull-right"*/}
+                                {/*style={{marginRight:'200px'}}>Add</button>*/}
                      <table id="customers">
                          <tr style={{border:'1px solid #ddd'}}>
                              <td>
